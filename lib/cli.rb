@@ -26,9 +26,14 @@ class CommandLineInterface
             Sighting.select {|sighting| sighting.location_id == location.id}
         end.flatten
        
-        sightings.each_with_index do |sighting, index|
-            binding.pry
-            puts sightings[index]
+        sightings.each do |sighting|
+            
+            puts "
+            User: #{User.find(sighting.user_id).name},
+            City: #{Location.find(sighting.location_id).city},
+            State: #{Location.find(sighting.location_id).state},
+            Date: #{sighting.date},
+            Shape: #{sighting.shape}"
         end
     end
 
