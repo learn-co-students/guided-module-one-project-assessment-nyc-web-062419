@@ -83,11 +83,12 @@ class CommandLineInterface
             s.date = date
             s.shape = shape
         end
-     
+        user.sightings << sighting
         puts "Your sighting has been created!"
 
         put_sighting(sighting)
-
+        
+        user
     end
 
     def my_sightings(user)
@@ -110,14 +111,6 @@ class CommandLineInterface
         if my_sightings(user)
             puts 'Select which sighting you would like to edit by entering its sighting number:'
             sighting = nil
-
-            # while 
-            #     if (1..user.sightings.length)
-            #         sighting = user.sightings[num-1]
-            #     else
-            #         puts "Please enter a valid sighting number."
-            #     end
-            # end
             
             while sighting == nil
                 num = gets.chomp.to_i
@@ -159,18 +152,25 @@ class CommandLineInterface
         answer = gets.chomp
         if answer.downcase == 'y' || answer.downcase == 'yes'
             sighting.delete
+            binding.pry
             puts "Your sighting has been deleted. The government will never find out."
         end
+        
     end
 
     def help
         puts "
-        report : report a UFO sighting,
-        find : search for sightings by location,
-        my sightings : displays your UFO sightings,
-        edit : edit one of your UFO sightings,
-        delete : delete one of your UFO sightings,
-        help : displays this list"
+        report :          report a UFO sighting,
+        find :            search for sightings by location,
+        my sightings :    displays your UFO sightings,
+        edit :            edit one of your UFO sightings,
+        delete :          delete one of your UFO sightings,
+        help :            displays this list
+        exit :            exits the program"
+    end
+
+    def exit
+        puts "Farewell, Earthling"
     end
 
 end
