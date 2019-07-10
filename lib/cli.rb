@@ -1,6 +1,5 @@
 require 'pry'
 class CommandLineInterface
-    include Kernel
     def greet
         puts 'Greetings, Earthling.'
     end
@@ -22,12 +21,14 @@ class CommandLineInterface
         location_array = Location.select {|location| location.city.include?(city) && location.state == state}
         
         sightings = location_array.collect do |location|
-           
-            Sighting.select {|sighting| sighting.location_id == location.id}
+            location.sightings
         end.flatten
        
         sightings.each do |sighting| 
             put_sighting(sighting)
+        end
+        if sightings == []
+            puts "Sorry, this city does not have any sightings ...yet."
         end
     end
 
@@ -66,7 +67,7 @@ class CommandLineInterface
     end
 
     def get_a_shape
-        puts "Enter a one-word description of the shape of the ufo spotted (i.e. cylinder, circle, sphere, disk, light, fireball, triangle, cross, crescent, etc.):"
+        puts "Enter a one word description of the shape of the ufo spotted (i.e. cylinder, circle, sphere, disk, light, fireball, triangle, cross, crescent, etc.):"
         shape = gets.chomp
     end
 
