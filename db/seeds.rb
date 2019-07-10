@@ -9,10 +9,11 @@ require_relative '../config/environment.rb'
 # Location.delete_all
 # Sighting.delete_all
 
-Sighting.all.each do |sighting|
+Sighting.all.collect do |sighting|
     if sighting.user_id == nil
         user = rand(501..1015)
         sighting.user_id = user
+        sighting.save
     end
 end
         
