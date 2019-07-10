@@ -109,22 +109,29 @@ class CommandLineInterface
         if my_sightings(user)
             puts 'Select which sighting you would like to edit by entering its sighting number:'
             sighting = nil
-            while sighting = nil
+
+            # while 
+            #     if (1..user.sightings.length)
+            #         sighting = user.sightings[num-1]
+            #     else
+            #         puts "Please enter a valid sighting number."
+            #     end
+            # end
+            
+            while sighting == nil
                 num = gets.chomp.to_i
-               
                 sighting = user.sightings[num-1]
-                if sighting
-                    break
+                if sighting == nil
+                    puts "Please enter a valid sighting number."
                 end
-                puts "Please enter a valid sighting number."
-                
+                sighting
             end
             put_sighting(sighting)
 
             puts 'Would you like to edit the shape (y/n)?'
             answer = gets.chomp
-           
-            if answer.downcase == ('y' || 'yes')
+         
+            if answer.downcase == 'y' || answer.downcase == 'yes'
                 sighting.shape = get_a_shape
                 sighting.save
                 put_sighting(sighting)
@@ -132,7 +139,7 @@ class CommandLineInterface
             end
             puts 'Would you like to edit the location (y/n)?'
             answer = gets.chomp
-            if answer.downcase == ('y' || 'yes')
+            if answer.downcase == 'y' || answer.downcase == 'yes'
                 sighting.location_id = get_a_location.id
                 sighting.save
                 put_sighting(sighting)
@@ -149,7 +156,7 @@ class CommandLineInterface
         put_sighting(sighting)
         puts 'Are you sure you want to delete this sighting (y/n)?'
         answer = gets.chomp
-        if answer.downcase == ('y' || 'yes')
+        if answer.downcase == 'y' || answer.downcase == 'yes'
             sighting.delete
             puts "Your sighting has been deleted. The government will never find out."
         end
