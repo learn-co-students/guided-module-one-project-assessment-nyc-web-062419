@@ -9,14 +9,22 @@ require_relative '../config/environment.rb'
 # Location.delete_all
 # Sighting.delete_all
 
+Sighting.all.each do |sighting|
+    if sighting.user_id == nil
+        user = rand(501..1015)
+        sighting.user_id = user
+    end
+end
+        
+
 # ufo_array = File.read('./lib/ufo-sightings.json')
 # ufo_hash = JSON.parse(ufo_array)
 
-i = 1014
-while i > 0
-    user = User.create(name: Faker::Name.name)
-    i -= 1
-end
+# i = 1014
+# while i > 0
+#     user = User.create(name: Faker::Name.name)
+#     i -= 1
+# end
 
 # us_ufos = ufo_hash.select {|hash| hash["country"] == "us"}
 
