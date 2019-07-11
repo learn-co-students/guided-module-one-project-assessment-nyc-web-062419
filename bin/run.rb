@@ -19,6 +19,9 @@ loop do
         cli.my_sightings(user)
     elsif command == "help"
         cli.help
+    elsif command == "disappear"
+        cli.disappear(user)
+        break
     elsif command == "exit"
         cli.exit
         break

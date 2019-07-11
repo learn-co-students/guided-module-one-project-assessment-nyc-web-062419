@@ -7,8 +7,23 @@ class CommandLineInterface
     def get_user
         puts "Enter your username:"
         name = gets.chomp.colorize(:green)
-        user = User.find_or_create_by(name: name)
-        puts "Welcome #{name}!".colorize (:cyan)
+        if User.find_by(name: name)
+            puts "An existing user with the name: #{name} has been found. Is this you? (y/n)"
+            answer = gets.chomp
+            if answer.downcase == 'y' || answer.downcase == 'yes'
+                user = User.find_by(name: name)
+                puts "Welcome back #{name}!".colorize (:cyan)
+            else
+                puts 'Please enter a different username.'
+                user = get_user
+            end
+        else
+            user = User.create(name: name)
+            puts "Welcome #{name}!".colorize (:cyan)
+        end
+        # user = User.find_or_create_by(name: name)
+
+        # puts "Welcome #{name}!".colorize (:cyan)
         user
     end
 
@@ -168,13 +183,25 @@ class CommandLineInterface
         end
     end
 
+    def disappear(user)
+        puts "Are you sure you want to delete your username and all of your sightings? (y/n)"
+        answer = gets.chomp
+        if answer.downcase == 'y' || answer.downcase == 'yes'
+            user.sightings.destroy_all
+            user.destroy
+            puts "User deleted - no trace left behind.".colorize(:red)
+            exit
+        end 
+    end
+
     def help
         puts "
         report".colorize(:green) + " :          report a UFO sighting,"
         puts "        find".colorize(:green) + " :            search for sightings by location," 
         puts "        my sightings".colorize(:green) + " :    displays your UFO sightings," 
         puts "        edit".colorize(:green) + " :            edit one of your UFO sightings," 
-        puts "        delete".colorize(:green) + " :          delete one of your UFO sightings," 
+        puts "        delete".colorize(:green) + " :          delete one of your UFO sightings,"
+        puts "        disappear".colorize(:green) + " :       delete your username and all of your sightings" 
         puts "        help".colorize(:green) + " :            displays this list," 
         puts "        exit".colorize(:green) + " :            exits the program"
     end
