@@ -145,14 +145,23 @@ class CommandLineInterface
     def delete_sighting(user)
         my_sightings(user)
         puts 'Select which sighting you would like to delete by entering its sighting number:'
-        num = gets.chomp.to_i
-        sighting = user.sightings[num-1]
+        sighting = nil
+        
+        while sighting == nil
+            num = gets.chomp.to_i
+            sighting = user.sightings[num-1]
+            if sighting == nil
+                puts "Please enter a valid sighting number."
+            end
+            sighting
+        end
         put_sighting(sighting)
         puts 'Are you sure you want to delete this sighting (y/n)?'
         answer = gets.chomp
         if answer.downcase == 'y' || answer.downcase == 'yes'
             sighting.delete
-            binding.pry
+            user.sightings.delete(sighting)
+            
             puts "Your sighting has been deleted. The government will never find out."
         end
         
