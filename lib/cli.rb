@@ -1,22 +1,22 @@
 require 'pry'
 class CommandLineInterface
     def greet
-        puts 'Greetings, Earthling.'
+        puts 'Greetings, Earthling. 👽'.colorize(:light_magenta)
     end
 
     def get_user
         puts "Enter your username:"
-        name = gets.chomp
+        name = gets.chomp.colorize(:green)
         user = User.find_or_create_by(name: name)
-        puts "Welcome #{name}."
+        puts "Welcome #{name}!".colorize (:cyan)
         user
     end
 
     def get_sighting_by_location
         puts "Please enter a city and state to find sightings in that city:"
-        puts "City:"
+        puts "City:".colorize(:light_blue)
         city = gets.chomp.downcase
-        puts "State(XX):"
+        puts "State(XX):".colorize(:light_blue)
         state = gets.chomp.downcase
         location_array = Location.select {|location| location.city.include?(city) && location.state == state}
         
@@ -28,24 +28,24 @@ class CommandLineInterface
             put_sighting(sighting)
         end
         if sightings == []
-            puts "Sorry, this city does not have any sightings ...yet."
+            puts "Sorry, this city does not have any sightings ...yet. 👀"
         end
     end
 
     def put_sighting(sighting)
         puts "
-        User: #{User.find(sighting.user_id).name},
+        User: #{User.find(sighting.user_id).name}, 
         City: #{Location.find(sighting.location_id).city},
         State: #{Location.find(sighting.location_id).state},
-        Date: #{sighting.date},
-        Shape: #{sighting.shape}"
+        Date: #{sighting.date}, 
+        Shape: #{sighting.shape}".colorize(:color => :black, :background => :green)
     end
 
     def get_a_location
         puts "Please enter the city and state where your sighting occurred."
-        puts "City:"
+        puts "City:".colorize(:light_blue)
         city = gets.chomp.downcase
-        puts "State(XX):"
+        puts "State(XX):".colorize(:light_blue)
         state = gets.chomp.downcase
 
         cities = Location.select {|location| location.city.include?(city) && location.state == state}
@@ -67,7 +67,8 @@ class CommandLineInterface
     end
 
     def get_a_shape
-        puts "Enter a one word description of the shape of the ufo spotted (i.e. cylinder, circle, sphere, disk, light, fireball, triangle, cross, crescent, etc.):"
+        puts "Enter a one word description of the shape of the ufo spotted 
+(i.e. sphere, disk, light, triangle, crescent, etc.):".colorize(:light_blue)
         shape = gets.chomp
     end
 
@@ -143,43 +144,43 @@ class CommandLineInterface
     end
 
     def delete_sighting(user)
-        my_sightings(user)
-        puts 'Select which sighting you would like to delete by entering its sighting number:'
-        sighting = nil
-        
-        while sighting == nil
-            num = gets.chomp.to_i
-            sighting = user.sightings[num-1]
-            if sighting == nil
-                puts "Please enter a valid sighting number."
-            end
-            sighting
-        end
-        put_sighting(sighting)
-        puts 'Are you sure you want to delete this sighting (y/n)?'
-        answer = gets.chomp
-        if answer.downcase == 'y' || answer.downcase == 'yes'
-            sighting.delete
-            user.sightings.delete(sighting)
+        if my_sightings(user)
+            puts 'Select which sighting you would like to delete by entering its sighting number:'
+            sighting = nil
             
-            puts "Your sighting has been deleted. The government will never find out."
+            while sighting == nil
+                num = gets.chomp.to_i
+                sighting = user.sightings[num-1]
+                if sighting == nil
+                    puts "Please enter a valid sighting number."
+                end
+                sighting
+            end
+            put_sighting(sighting)
+            puts 'Are you sure you want to delete this sighting (y/n)?'
+            answer = gets.chomp
+            if answer.downcase == 'y' || answer.downcase == 'yes'
+                sighting.delete
+                user.sightings.delete(sighting)
+                
+                puts "Your sighting has been deleted. The government will never find out. 🤐".colorize(:red)
+            end
         end
-        
     end
 
     def help
         puts "
-        report :          report a UFO sighting,
-        find :            search for sightings by location,
-        my sightings :    displays your UFO sightings,
-        edit :            edit one of your UFO sightings,
-        delete :          delete one of your UFO sightings,
-        help :            displays this list
-        exit :            exits the program"
+        report".colorize(:green) + " :          report a UFO sighting,"
+        puts "        find".colorize(:green) + " :            search for sightings by location," 
+        puts "        my sightings".colorize(:green) + " :    displays your UFO sightings," 
+        puts "        edit".colorize(:green) + " :            edit one of your UFO sightings," 
+        puts "        delete".colorize(:green) + " :          delete one of your UFO sightings," 
+        puts "        help".colorize(:green) + " :            displays this list," 
+        puts "        exit".colorize(:green) + " :            exits the program"
     end
 
     def exit
-        puts "Farewell, Earthling"
+        puts "Farewell, Earthling. ✌️  🛸".colorize(:light_magenta)
     end
 
 end
