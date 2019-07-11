@@ -158,16 +158,16 @@ class CommandLineInterface
             answer = gets.chomp
             if answer.downcase == 'y' || answer.downcase == 'yes'
                 date = get_a_date
-                puts "Enter the hour and minute (XX:XX) of the sighting:"
+                puts "Enter the hour and minute in 24-hr format (military time) of the sighting:"
                 puts "Hour:"
-                hour = gets.chomp
+                hour = gets.chomp.to_i
                 puts "Minute:"
-                minute = gets.chomp
-                binding.pry
-                new_date = DateTime.new(date.year, date.month, date.day, hour, minute)
-                sighting.date = new_date
+                minute = gets.chomp.to_i
+                
+                sighting.date = DateTime.new(date.year, date.month, date.day, hour, minute)
                 sighting.save
                 put_sighting(sighting)
+                puts " "
             end
         end
 
