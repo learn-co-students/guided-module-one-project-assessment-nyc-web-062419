@@ -21,9 +21,6 @@ class CommandLineInterface
             user = User.create(name: name)
             puts "Welcome #{name}!".colorize (:cyan)
         end
-        # user = User.find_or_create_by(name: name)
-
-        # puts "Welcome #{name}!".colorize (:cyan)
         user
     end
 
@@ -41,6 +38,7 @@ class CommandLineInterface
        
         sightings.each do |sighting| 
             put_sighting(sighting)
+            puts " "
         end
         if sightings == []
             puts "Sorry, this city does not have any sightings ...yet. 👀"
@@ -103,7 +101,7 @@ class CommandLineInterface
         puts "Your sighting has been created!"
 
         put_sighting(sighting)
-        
+        puts " "
         user
     end
 
@@ -120,6 +118,8 @@ class CommandLineInterface
                 put_sighting(sighting)
                 i+=1
             end
+            puts " "
+            " "
         end
     end
 
@@ -137,7 +137,7 @@ class CommandLineInterface
                 sighting
             end
             put_sighting(sighting)
-
+            puts " "
             puts 'Would you like to edit the shape (y/n)?'
             answer = gets.chomp
          
@@ -151,6 +151,21 @@ class CommandLineInterface
             answer = gets.chomp
             if answer.downcase == 'y' || answer.downcase == 'yes'
                 sighting.location_id = get_a_location.id
+                sighting.save
+                put_sighting(sighting)
+            end
+            puts "Would you like to edit the date (y/n)?"
+            answer = gets.chomp
+            if answer.downcase == 'y' || answer.downcase == 'yes'
+                date = get_a_date
+                puts "Enter the hour and minute (XX:XX) of the sighting:"
+                puts "Hour:"
+                hour = gets.chomp
+                puts "Minute:"
+                minute = gets.chomp
+                binding.pry
+                new_date = DateTime.new(date.year, date.month, date.day, hour, minute)
+                sighting.date = new_date
                 sighting.save
                 put_sighting(sighting)
             end
@@ -172,6 +187,7 @@ class CommandLineInterface
                 sighting
             end
             put_sighting(sighting)
+            puts " "
             puts 'Are you sure you want to delete this sighting (y/n)?'
             answer = gets.chomp
             if answer.downcase == 'y' || answer.downcase == 'yes'
@@ -197,7 +213,7 @@ class CommandLineInterface
     def help
         puts "
         report".colorize(:green) + " :          report a UFO sighting,"
-        puts "        find".colorize(:green) + " :            search for sightings by location," 
+        puts "        find".colorize(:green) + " :            search for sightings by location, shape, or date," 
         puts "        my sightings".colorize(:green) + " :    displays your UFO sightings," 
         puts "        edit".colorize(:green) + " :            edit one of your UFO sightings," 
         puts "        delete".colorize(:green) + " :          delete one of your UFO sightings,"
@@ -206,8 +222,48 @@ class CommandLineInterface
         puts "        exit".colorize(:green) + " :            exits the program"
     end
 
+    def get_sighting_by_shape
+        puts "Please enter a one word shape description to find sightings with that shape:"
+        shape = gets.chomp.downcase
+        sightings = Sighting.all.select {|sighting| sighting.shape == shape}
+
+        sightings.each do |sighting| 
+            put_sighting(sighting)
+        end
+        puts " "
+        if sightings == []
+            puts "Sorry, there are no sightings with that shape."
+        end
+    end
+
+    def get_a_date
+        puts "Please enter the numerical month, day, and year (XX/XX/XXXX) of the sighting:"
+        puts "Month:"
+        month = gets.chomp.to_i
+        puts "Day:"
+        day = gets.chomp.to_i
+        puts "Year:"
+        year = gets.chomp.to_i
+        date = DateTime.new(year, month, day)
+    end
+
+    def get_sighting_by_date
+        date = get_a_date
+
+        sightings = Sighting.all.select do |sighting|
+            
+            sighting.date.day == date.day && sighting.date.month == date.month && sighting.date.year == date.year
+        end
+
+        sightings.each do |sighting| 
+            put_sighting(sighting)
+        end
+        puts " "
+    end
+
     def exit
         puts "Farewell, Earthling. ✌️  🛸".colorize(:light_magenta)
+
     end
 
 end

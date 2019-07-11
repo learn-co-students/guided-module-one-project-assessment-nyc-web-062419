@@ -5,12 +5,20 @@ cli.greet
 user = cli.get_user
 cli.help
 loop do
-    puts "Enter a command:"
+    puts "Enter a command:".white.on_black
     command = gets.chomp.downcase
     if command == "report"
         user = cli.create_a_sighting(user)
     elsif command == "find"
-        cli.get_sighting_by_location
+        puts "Enter "+"'location'".colorize(:green)+ " to find sightings by location, "+ "'shape'".colorize(:green)+ " to find sightings by shape, or " + "'date'".colorize(:green)+ " to find sightings by date."
+        command = gets.chomp.downcase
+        if command == "location" 
+            cli.get_sighting_by_location
+        elsif command == "shape"
+            cli.get_sighting_by_shape
+        elsif command == "date"
+            cli.get_sighting_by_date
+        end
     elsif command == "edit"
         cli.edit_sighting(user)
     elsif command == "delete"
