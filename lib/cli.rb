@@ -214,6 +214,8 @@ class CommandLineInterface
         puts "Are you sure you want to delete your username and all of your sightings? (y/n)"
         answer = gets.chomp
         if answer.downcase == 'y' || answer.downcase == 'yes'
+            sightings = Sighting.all.select {|sighting| sighting.user_id == user.id}
+            sightings.each {|sighting| sighting.delete}
             user.sightings.destroy_all
             user.destroy
             puts "User deleted - no trace left behind.".colorize(:red)
