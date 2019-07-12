@@ -41,6 +41,7 @@ RE-SET DATABASE
 If you would like to delete all of your database data and then repopulate it, first run the following two lines of code in 'rake console' in your terminal:
 
 `User.delete_all`
+
 `ActiveRecord::Base.connection.execute(“DELETE from sqlite_sequence where name = 'users’”)`
 
 Then, un-comment out lines 11-12 in the seeds.rb file and run rake db:seed again.
@@ -79,11 +80,11 @@ Sightings can be looked up by location.
 
 A user can select a sighting to edit from their list of reported sightings.
 
-![Screen Shot 2019-07-12 at 11 10 42 AM](https://user-images.githubusercontent.com/50639575/61140368-597fa580-a499-11e9-97c1-7a54347a4cad.png) # edit date
+![Screen Shot 2019-07-12 at 11 10 42 AM](https://user-images.githubusercontent.com/50639575/61140368-597fa580-a499-11e9-97c1-7a54347a4cad.png) 
 
 The date of sightings can be edited.
 
-![Screen Shot 2019-07-12 at 11 10 09 AM](https://user-images.githubusercontent.com/50639575/61140408-68665800-a499-11e9-876b-6c4278678a20.png) # edit location
+![Screen Shot 2019-07-12 at 11 10 09 AM](https://user-images.githubusercontent.com/50639575/61140408-68665800-a499-11e9-876b-6c4278678a20.png) 
 
 The location of sightings can be edited.
 
@@ -91,11 +92,11 @@ The location of sightings can be edited.
 
 The shape of sightings can be edited.
 
-![Screen Shot 2019-07-12 at 11 11 11 AM](https://user-images.githubusercontent.com/50639575/61140292-38b75000-a499-11e9-91cb-c80d222a2ad9.png) # delete
+![Screen Shot 2019-07-12 at 11 11 11 AM](https://user-images.githubusercontent.com/50639575/61140292-38b75000-a499-11e9-91cb-c80d222a2ad9.png) 
 
 A user can choose a sighting to delete from their list of reported sightings.
 
-![Screen Shot 2019-07-12 at 11 07 09 AM](https://user-images.githubusercontent.com/50639575/61140619-be3b0000-a499-11e9-8e6e-23e61d0b3006.png) # disappear
+![Screen Shot 2019-07-12 at 11 07 09 AM](https://user-images.githubusercontent.com/50639575/61140619-be3b0000-a499-11e9-8e6e-23e61d0b3006.png) 
 
 A user can 'disappear' which will delete their username and all of thier reported sightings.
 
@@ -104,6 +105,7 @@ A user can 'disappear' which will delete their username and all of thier reporte
 ## Authors
 
 Kyle Conlon
+
 Adrienne Miranda
 
 ## Acknowledgments
