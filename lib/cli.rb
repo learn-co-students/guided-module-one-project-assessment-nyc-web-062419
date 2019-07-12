@@ -1,10 +1,12 @@
 require 'pry'
+require 'lolize'
 class CommandLineInterface
     def greet
         puts 'Greetings, Earthling. 👽'.colorize(:light_magenta)
     end
 
     def get_user
+        colorizer = Lolize::Colorizer.new
         puts "Enter your username:"
         name = gets.chomp.colorize(:green)
         if User.find_by(name: name)
@@ -12,14 +14,14 @@ class CommandLineInterface
             answer = gets.chomp
             if answer.downcase == 'y' || answer.downcase == 'yes'
                 user = User.find_by(name: name)
-                puts "Welcome back #{name}!".colorize (:cyan)
+                colorizer.write "Welcome back #{name}!"
             else
                 puts 'Please enter a different username.'
                 user = get_user
             end
         else
             user = User.create(name: name)
-            puts "Welcome #{name}!".colorize (:cyan)
+            colorizer.write "Welcome #{name}!"
         end
         user
     end
@@ -159,9 +161,9 @@ class CommandLineInterface
             if answer.downcase == 'y' || answer.downcase == 'yes'
                 date = get_a_date
                 puts "Enter the hour and minute in 24-hr format (military time) of the sighting:"
-                puts "Hour:"
+                puts "Hour:".light_blue
                 hour = gets.chomp.to_i
-                puts "Minute:"
+                puts "Minute:".light_blue
                 minute = gets.chomp.to_i
                 
                 sighting.date = DateTime.new(date.year, date.month, date.day, hour, minute)
@@ -211,15 +213,18 @@ class CommandLineInterface
     end
 
     def help
+        puts "                          
+                            "+"MAIN MENU".light_magenta+ " "
         puts "
         report".colorize(:green) + " :          report a UFO sighting,"
         puts "        find".colorize(:green) + " :            search for sightings by location, shape, or date," 
         puts "        my sightings".colorize(:green) + " :    displays your UFO sightings," 
         puts "        edit".colorize(:green) + " :            edit one of your UFO sightings," 
         puts "        delete".colorize(:green) + " :          delete one of your UFO sightings,"
-        puts "        disappear".colorize(:green) + " :       delete your username and all of your sightings" 
-        puts "        help".colorize(:green) + " :            displays this list," 
+        puts "        disappear".colorize(:green) + " :       delete your username and all of your sightings," 
+        puts "        help".colorize(:green) + " :            displays this menu," 
         puts "        exit".colorize(:green) + " :            exits the program"
+        puts " "
     end
 
     def get_sighting_by_shape
@@ -238,11 +243,11 @@ class CommandLineInterface
 
     def get_a_date
         puts "Please enter the numerical month, day, and year (XX/XX/XXXX) of the sighting:"
-        puts "Month:"
+        puts "Month:".light_blue
         month = gets.chomp.to_i
-        puts "Day:"
+        puts "Day:".light_blue
         day = gets.chomp.to_i
-        puts "Year:"
+        puts "Year:".light_blue
         year = gets.chomp.to_i
         date = DateTime.new(year, month, day)
     end
