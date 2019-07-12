@@ -3,7 +3,10 @@ require_relative '../config/environment'
 cli = CommandLineInterface.new
 cli.greet
 user = cli.get_user
+
+sleep 1
 cli.help
+sleep 1
 loop do
     puts "Enter a command:".white.on_black
     command = gets.chomp.downcase

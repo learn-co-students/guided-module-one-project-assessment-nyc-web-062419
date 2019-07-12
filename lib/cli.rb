@@ -1,8 +1,10 @@
 require 'pry'
 require 'lolize'
+
 class CommandLineInterface
     def greet
         puts 'Greetings, Earthling. 👽'.colorize(:light_magenta)
+        sleep 1
     end
 
     def get_user
@@ -14,6 +16,7 @@ class CommandLineInterface
             answer = gets.chomp
             if answer.downcase == 'y' || answer.downcase == 'yes'
                 user = User.find_by(name: name)
+                sleep 1
                 colorizer.write "Welcome back #{name}!"
             else
                 puts 'Please enter a different username.'
@@ -21,6 +24,7 @@ class CommandLineInterface
             end
         else
             user = User.create(name: name)
+            sleep 1
             colorizer.write "Welcome #{name}!"
         end
         user
@@ -53,7 +57,13 @@ class CommandLineInterface
         City: #{Location.find(sighting.location_id).city},
         State: #{Location.find(sighting.location_id).state},
         Date: #{sighting.date}, 
-        Shape: #{sighting.shape}".colorize(:color => :black, :background => :green)
+        Shape: #{sighting.shape}".black.on_green
+        # puts "
+        # User: #{User.find(sighting.user_id).name},".black.on_green+"    
+        # ".black.on_green+"City: #{Location.find(sighting.location_id).city},".black.on_green+"
+        # ".black.on_green+"State: #{Location.find(sighting.location_id).state},".black.on_green+"
+        # ".black.on_green+"Date: #{sighting.date},".black.on_green+" 
+        # ".black.on_green+"Shape: #{sighting.shape}".black.on_green
     end
 
     def get_a_location
@@ -101,7 +111,6 @@ class CommandLineInterface
         end
         user.sightings << sighting
         puts "Your sighting has been created!"
-
         put_sighting(sighting)
         puts " "
         user

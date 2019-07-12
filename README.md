@@ -46,6 +46,8 @@ Then, un-comment out lines 11-12 in the seeds.rb file and run rake db:seed again
 
 ## Screenshots
 
+![mvp](screenshots/Screen Shot 2019-07-12 at 9.46.36 AM.png)
+
 ## Authors
 
 Kyle Conlon
