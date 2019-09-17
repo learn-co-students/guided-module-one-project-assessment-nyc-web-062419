@@ -101,7 +101,6 @@ A user can choose a sighting to delete from their list of reported sightings.
 A user can 'disappear' which will delete their username and all of thier reported sightings.
 
 
-
 ## Authors
 
 Kyle Conlon
@@ -111,8 +110,6 @@ Adrienne Miranda
 ## Acknowledgments
 
 UFO sighting data was provided by: https://www.kaggle.com/NUFORC/ufo-sightings
-
-Callie "Satan" Terry
 
 👽🛸👽
 
